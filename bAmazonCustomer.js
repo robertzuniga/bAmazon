@@ -29,37 +29,62 @@ function readProducts() {
 
 
 function start() {
-    readProducts();
-    console.log("-----------------------------------");
+    connection.query("SELECT * FROM products", function (err, results) {
+        if (err) throw err;
+        // console.log("results[0].id ==>",results[0].id, "\n\n");
+        // console.log("results ==> \n\n",results,"\n\n");
 
-    inquirer
-        .prompt([{
-                name: "id",
-                type: "input",
-                message: "Please enter the product ID: "
-            },
-            {
-                name: "stock_quantity",
-                type: "input",
-                message: "Please enter the number desired: "
-            }
-        ])
-        .then(function (answer) {
-            console.log(answer);
-            console.log("answer.id             ==> ", answer.id);
-            console.log("answer.stock_quantity ==> ", answer.stock_quantity);
-            console.log("-----------------------------------");
-            console.log("  ")
+        console.log("-----------------------------------");
+
+        inquirer
+            .prompt([{
+                    name: "id",
+                    type: "input",
+                    message: "Please enter the product ID: "
+                },
+                {
+                    name: "stock_quantity",
+                    type: "input",
+                    message: "Please enter the number desired: "
+                }
+            ])
+            .then(function (answer) {
+                // console.log("answer = : ", answer);
+                // console.log("answer.id             ==> ", answer.id);
+                // console.log("answer.stock_quantity ==> ", answer.stock_quantity);
+                // console.log("-----------------------------------");
+                // console.log("  ")
+
+                // verify the id exist
+
+                var chosenItem;
+                for (var i = 0; i < results.length; i++) {
+                    // console.log("results[i].id ==> ", results[i].id);
+                    // console.log("answer.id == > ", answer.id);
+
+                    if (answer.id == results[i].id) {
+                        chosenItem = results[i];
+                        console.log("***********match***************");
+                        console.log("chosenItem = ", chosenItem);
+                    }
+                }
+                console.log("chosenItem.stock_quanty = ", chosenItem.stock_quantity);
+                console.log("answer.stock_quantity ==> ", answer.stock_quantity);
+
+                if (chosenItem.stock_quantity >= answer.stock_quantity) {
+                    console.log("Yes, we can place your order!");
+                } else {
+                    console.log("Sorry, we do not have enough in stock, please resubmit new order!")
+                }
 
 
 
-            disconnectFromDB();
+                disconnectFromDB();
 
-        })
-
-
-
-};
+            }) //end inquirer
+        // disconnectFromDB();
+    }); // end connection.query
+}; // end function start
 
 
 
