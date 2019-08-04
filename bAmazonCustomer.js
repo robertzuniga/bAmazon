@@ -13,38 +13,51 @@ var connection = mysql.createConnection({
 connection.connect(function (err) {
     if (err) throw err;
     console.log("<>    connect successful...id ==> " + connection.threadId);
-    connection.query("SELECT * FROM products", function (err, res) {
-        if (err) throw err;
-        // console.log(res);
-    })
     start();
-    disconnectFromDB();
+    //  disconnectFromDB();
 });
+
+function readProducts() {
+    // console.log("\n\nCurrent Products Available: \n\n")
+    connection.query("SELECT * FROM products", function (err, results) {
+        if (err) throw err;
+        // console.log("results[0].id ==>",results[0].id, "\n\n");
+        // console.log("results ==> \n\n",results,"\n\n");
+    })
+    // disconnectFromDB();
+}
 
 
 function start() {
-console.log("-----------------------------------");
+    readProducts();
+    console.log("-----------------------------------");
 
     inquirer
-    .prompt([
-    {
-        name: "id",
-        type: "input",
-        message: "Please enter the product ID: "
-    },
-    {
-        name: "stock_quantity",
-        type: "input",
-        message: "Please enter the number desired: "
-    }    
-])
-.then (function(answer) {
-console.log(answer);
-console.log("answer.id           ==> ",answer.id);
-console.log("answer.stock_quanty ==> ",answer.stock_quantity);
-console.log("-----------------------------------");
-}
-)
+        .prompt([{
+                name: "id",
+                type: "input",
+                message: "Please enter the product ID: "
+            },
+            {
+                name: "stock_quantity",
+                type: "input",
+                message: "Please enter the number desired: "
+            }
+        ])
+        .then(function (answer) {
+            console.log(answer);
+            console.log("answer.id             ==> ", answer.id);
+            console.log("answer.stock_quantity ==> ", answer.stock_quantity);
+            console.log("-----------------------------------");
+            console.log("  ")
+
+
+
+            disconnectFromDB();
+
+        })
+
+
 
 };
 
@@ -55,6 +68,3 @@ function disconnectFromDB() {
     connection.end();
     // console.log("<> disconnect successful");
 };
-
-
-// console.log(res);
