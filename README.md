@@ -2,12 +2,12 @@
 application of MySQL and Node.js
 
 Software Used:
-MySQL Workbench for Windows
-MAMP for Windows
+MySQL Workbench for Windows |
+MAMP for Windows | 
 Visual Studio Code for Windows
 
 NPM Packages used:
-*MySQL
+*MySQL |
 *Inquirer
 
 -----------------------------------------------------------
