@@ -77,6 +77,7 @@ function start() {
                     
                     var updatedInStock = parseInt(chosenItem.stock_quantity) - parseInt(answer.stock_quantity);
                     console.log('Updated Stock',updatedInStock);
+
                     
                     connection.query(
                         "UPDATE products SET ? WHERE ?",
@@ -93,9 +94,11 @@ function start() {
                             // console.log("answer ", answer);
                         }
                     );
-
-
-                    //console.log("Order Placed Successfully!");
+                    // console.log(answer.stock_quantity);
+                    // console.log(chosenItem.price);
+                    var totalCost = answer.stock_quantity*chosenItem.price;
+                    console.log("Order Placed Successfully!");
+                    console.log("Your Total Cost = $ ",totalCost);
 
                 } else {
                     console.log("Sorry, we do not have enough in stock, please resubmit new order!")
