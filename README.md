@@ -20,7 +20,7 @@ example-
 
 node bAmazonCustomer.js
 
-![node bAmazonCustomer](https://)
+![node bAmazonCustomer](https://raw.githubusercontent.com/robertzuniga/bAmazon/master/images/bAmazonCustomer-Screen-Capture.JPG)
 
 Steps Used to complete Task:
 
