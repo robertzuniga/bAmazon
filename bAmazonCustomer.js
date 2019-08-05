@@ -17,15 +17,15 @@ connection.connect(function (err) {
     //  disconnectFromDB();
 });
 
-function readProducts() {
-    // console.log("\n\nCurrent Products Available: \n\n")
-    connection.query("SELECT * FROM products", function (err, results) {
-        if (err) throw err;
-        // console.log("results[0].id ==>",results[0].id, "\n\n");
-        // console.log("results ==> \n\n",results,"\n\n");
-    })
-    // disconnectFromDB();
-}
+// function readProducts() {
+//     // console.log("\n\nCurrent Products Available: \n\n")
+//     connection.query("SELECT * FROM products", function (err, results) {
+//         if (err) throw err;
+//         // console.log("results[0].id ==>",results[0].id, "\n\n");
+//         // console.log("results ==> \n\n",results,"\n\n");
+//     })
+//     // disconnectFromDB();
+// }
 
 
 function start() {
@@ -61,18 +61,39 @@ function start() {
                 for (var i = 0; i < results.length; i++) {
                     // console.log("results[i].id ==> ", results[i].id);
                     // console.log("answer.id == > ", answer.id);
-
-                    if (answer.id == results[i].id) {
+                    if (parseInt(answer.id) == results[i].id) {
                         chosenItem = results[i];
                         console.log("***********match***************");
                         console.log("chosenItem = ", chosenItem);
                     }
                 }
-                console.log("chosenItem.stock_quanty = ", chosenItem.stock_quantity);
-                console.log("answer.stock_quantity ==> ", answer.stock_quantity);
-
+                // console.log("chosenItem.stock_quanty = ", chosenItem.stock_quantity);
+                console.log("Available ==> ", chosenItem.stock_quantity);
+                // console.log("answer.stock_quantity ==> ", answer.stock_quantity);
+                console.log("Requested ==> ", answer.stock_quantity);
                 if (chosenItem.stock_quantity >= answer.stock_quantity) {
                     console.log("Yes, we can place your order!");
+                    
+                    var updatedInStock = parseInt(chosenItem.stock_quantity) - parseInt(answer.stock_quantity);
+                    console.log('Updated Stock',updatedInStock);
+                    // connection.query(
+                    //     "UPDATE products SET ? WHERE ?",
+                    //     [{
+                    //             stock_quantity: updatedInStock
+                    //         },
+                    //         {
+                    //             id: chosenItem.id
+                    //         }
+                    //     ],
+                    //     function (error) {
+                    //         if (error) throw err;
+                    //         console.log("chosenItem = ", chosenItem);
+                    //     }
+                    // );
+
+
+                    //console.log("Order Placed Successfully!");
+
                 } else {
                     console.log("Sorry, we do not have enough in stock, please resubmit new order!")
                 }
