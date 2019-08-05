@@ -21,8 +21,9 @@ connection.connect(function (err) {
 //     // console.log("\n\nCurrent Products Available: \n\n")
 //     connection.query("SELECT * FROM products", function (err, results) {
 //         if (err) throw err;
+        
 //         // console.log("results[0].id ==>",results[0].id, "\n\n");
-//         // console.log("results ==> \n\n",results,"\n\n");
+//         console.log("results ==> \n\n",results,"\n\n");
 //     })
 //     // disconnectFromDB();
 // }
@@ -40,7 +41,7 @@ function start() {
             .prompt([{
                     name: "id",
                     type: "input",
-                    message: "Please enter the product ID: "
+                    message: "Please enter the product ID (1-10): "
                 },
                 {
                     name: "stock_quantity",
@@ -76,20 +77,22 @@ function start() {
                     
                     var updatedInStock = parseInt(chosenItem.stock_quantity) - parseInt(answer.stock_quantity);
                     console.log('Updated Stock',updatedInStock);
-                    // connection.query(
-                    //     "UPDATE products SET ? WHERE ?",
-                    //     [{
-                    //             stock_quantity: updatedInStock
-                    //         },
-                    //         {
-                    //             id: chosenItem.id
-                    //         }
-                    //     ],
-                    //     function (error) {
-                    //         if (error) throw err;
-                    //         console.log("chosenItem = ", chosenItem);
-                    //     }
-                    // );
+                    
+                    connection.query(
+                        "UPDATE products SET ? WHERE ?",
+                        [{
+                                stock_quantity: updatedInStock
+                            },
+                            {
+                                id: chosenItem.id
+                            }
+                        ],
+                        function (error) {
+                            if (error) throw err;
+                            // readProducts();
+                            // console.log("answer ", answer);
+                        }
+                    );
 
 
                     //console.log("Order Placed Successfully!");
